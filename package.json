@@ -1,0 +1,31 @@
+{
+  "name": "1shot-token-factory",
+  "version": "1.0.0",
+  "description": "A token factory for use with the 1Shot API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UXlySoftware/1Shot-Token-Factory.git"
+  },
+  "keywords": [
+    "EVM",
+    "1Shot",
+    "API",
+    "ERC-20",
+    "hardhat",
+    "solidity"
+  ],
+  "author": "UXly Software",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/UXlySoftware/1Shot-Token-Factory/issues"
+  },
+  "homepage": "https://github.com/UXlySoftware/1Shot-Token-Factory#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.19"
+  }
+}
