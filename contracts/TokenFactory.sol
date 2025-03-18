@@ -15,7 +15,7 @@ contract TokenFactory is AccessControl {
 
     constructor(address defaultAdmin) {
         Token tokenImpl = new Token();
-        tokenImpl.initialize(address(this), address(this));
+        tokenImpl.initialize(address(this), "1Shot Token", "1SHOT", 0);
 
         // Deploy the Upgradeable Beacon that points to the implementation Vault contract address
         // https://docs.openzeppelin.com/contracts/3.x/api/proxy#UpgradeableProxy
@@ -28,14 +28,13 @@ contract TokenFactory is AccessControl {
 
     /// @notice deploys a Beacon Proxy with New keyword and salt to create an upgradeable Vault
     /// @dev https://docs.openzeppelin.com/contracts/5.x/api/proxy#UpgradeableBeacon
-    /// @param name a string used to name the Vault deployed to make it easy to look up (hashed to create salt)
-    /// @param owner an address that will own the Vault contract
-    function deployToken(string memory name, address payable owner) public {
-        /// NOTE: The address of the beacon contract will never change after deployment. Additionally, in this example we call 
-        /// the initializer after deployment so that the proxy address does not depend on the initializer arguments. The means you only
-        /// need to use the salt value to calculate the proxy address.
+    /// @param admin the address which will control minting functionality on this token
+    /// @param name a string which will be the name of the deployed token
+    /// @param ticker a string which will serve as the token symbol
+    /// @param premint a uint denoting the amount of token to premint (remember there are 18 decimal places)
+    function deployToken(address admin, string calldata name, string calldata ticker, uint, uint premint) public {
         BeaconProxy proxy = new BeaconProxy(beaconAddress,  '');
-        Token(address(proxy)).initialize(owner, owner);
+        Token(address(proxy)).initialize(admin, name, ticker, premint);
         
         emit TokenCreated(address(proxy));
     }

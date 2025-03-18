@@ -15,13 +15,14 @@ contract Token is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, Acc
         _disableInitializers();
     }
 
-    function initialize(address defaultAdmin, address minter) public initializer {
-        __ERC20_init("MyToken", "MTK");
+    function initialize(address defaultAdmin, string calldata name, string calldata ticker, uint premint) public initializer {
+        __ERC20_init(name, ticker);
         __ERC20Burnable_init();
         __AccessControl_init();
 
+        _mint(defaultAdmin, premint);
         _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
-        _grantRole(MINTER_ROLE, minter);
+        _grantRole(MINTER_ROLE, defaultAdmin);
     }
 
     function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
