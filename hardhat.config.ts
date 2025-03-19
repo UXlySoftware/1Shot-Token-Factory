@@ -18,12 +18,6 @@ const config: HardhatUserConfig = {
   },
   defaultNetwork: "hardhat",
   networks: {
-    hardhat: {
-      mining: {
-        auto: false,
-        interval: 5000
-      }
-    },
     sepolia: {
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
       accounts: [`${PRIVATE_KEY}`],
