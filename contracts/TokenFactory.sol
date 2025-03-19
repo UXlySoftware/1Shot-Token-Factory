@@ -13,14 +13,11 @@ contract TokenFactory is AccessControl {
 
     event TokenCreated(address token);
 
-    constructor(address defaultAdmin) {
-        Token tokenImpl = new Token();
-        tokenImpl.initialize(address(this), "1Shot Token", "1SHOT", 0);
-
+    constructor(address defaultAdmin, address tokenImpl) {
         // Deploy the Upgradeable Beacon that points to the implementation Vault contract address
         // https://docs.openzeppelin.com/contracts/3.x/api/proxy#UpgradeableProxy
         // All deployed proxies can be upgraded by changing the implementation address in the beacon
-        UpgradeableBeacon _upgradeableBeacon = new UpgradeableBeacon(address(tokenImpl), defaultAdmin);
+        UpgradeableBeacon _upgradeableBeacon = new UpgradeableBeacon(tokenImpl, defaultAdmin);
         beaconAddress = address(_upgradeableBeacon);
 
         _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
@@ -32,7 +29,7 @@ contract TokenFactory is AccessControl {
     /// @param name a string which will be the name of the deployed token
     /// @param ticker a string which will serve as the token symbol
     /// @param premint a uint denoting the amount of token to premint (remember there are 18 decimal places)
-    function deployToken(address admin, string calldata name, string calldata ticker, uint, uint premint) public {
+    function deployToken(address admin, string calldata name, string calldata ticker, uint premint) public {
         BeaconProxy proxy = new BeaconProxy(beaconAddress,  '');
         Token(address(proxy)).initialize(admin, name, ticker, premint);
         

@@ -7,7 +7,15 @@ const PRIVATE_KEY = vars.has("PRIVATE_KEY") ? [vars.get("PRIVATE_KEY")] : ["0xac
 const ETHERSCAN_API_KEY = vars.has("ETHERSCAN_API_KEY") ? [vars.get("ETHERSCAN_API_KEY")] : [];
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.28",
+  solidity: {
+    version: "0.8.28",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,
+      },
+    },
+  },
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {
