@@ -12,18 +12,28 @@ const config: HardhatUserConfig = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200,
+        runs: 1000,
       },
     },
   },
   defaultNetwork: "hardhat",
   networks: {
+    hardhat: {
+      mining: {
+        auto: true,
+        interval: 5000
+      }
+    },
     sepolia: {
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
       accounts: [`${PRIVATE_KEY}`],
     },
     fuji: {
       url: `https://avalanche-fuji.infura.io/v3/${INFURA_API_KEY}`,
+      accounts: [`${PRIVATE_KEY}`],
+    },
+    bsc: {
+      url: `https://bsc-mainnet.infura.io/v3/${INFURA_API_KEY}`,
       accounts: [`${PRIVATE_KEY}`],
     }
   },
@@ -40,6 +50,14 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   for (const account of accounts) {
     console.log("Address: ", account.address, " Balance: ", await hre.ethers.provider.getBalance(account.address));
   }
+});
+
+task("latestblock", "Prints the latest block", async (taskArgs, hre) => {
+  console.log(" Current Block: ", await hre.ethers.provider.getBlock("latest"));
+});
+
+task("feedata", "Prints the current fee data", async (taskArgs, hre) => {
+  console.log("Fee Data: ", await hre.ethers.provider.getFeeData());
 });
 
 export default config;
