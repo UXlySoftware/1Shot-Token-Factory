@@ -39,10 +39,42 @@ describe("TokenFactory", function () {
           deployTokenFactory
         );
 
-
         await expect(tokenFactory.deployToken(owner.address, "TestToken", "TT", 0))
           .to.emit(tokenFactory, "TokenCreated")
           .withArgs(anyValue); // We accept any value as `when` arg
+      });
+    });
+
+    describe("Minting", function () {
+      it("Total supply should be 0 when deployed", async function () {
+        const { tokenFactory, owner } = await loadFixture(
+          deployTokenFactory
+        );
+
+        const maxSupply = '100000000000000000000';
+        const tx = await tokenFactory.deployToken(owner.address, "TestToken", "TT", maxSupply);
+        tx.wait();
+
+        const token = await hre.ethers.getContractAt("Token", "0x9f1ac54BEF0DD2f6f3462EA0fa94fC62300d3a8e");
+        expect(await token.maxSupply()).to.equal(maxSupply);
+        expect(await token.totalSupply()).to.equal(0);
+      });
+
+      it("Can't mint more tokens than the total supply", async function () {
+        const { tokenFactory, owner } = await loadFixture(
+          deployTokenFactory
+        );
+
+        const maxSupply = '100000000000000000000';
+        const tx = await tokenFactory.deployToken(owner.address, "TestToken", "TT", maxSupply);
+        tx.wait();
+
+        const token = await hre.ethers.getContractAt("Token", "0x9f1ac54BEF0DD2f6f3462EA0fa94fC62300d3a8e");
+        await token.mint(owner.address, maxSupply);
+        expect(await token.totalSupply()).to.equal(await token.maxSupply());
+        await expect(
+          token.mint(owner.address, 1)
+        ).to.be.revertedWith("Max supply exceeded");
       });
     });
   });
