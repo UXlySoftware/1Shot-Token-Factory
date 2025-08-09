@@ -33,6 +33,10 @@ const config: HardhatUserConfig = {
       url: `https://avalanche-fuji.infura.io/v3/${INFURA_API_KEY}`,
       accounts: [`${PRIVATE_KEY}`],
     },
+    snowtrace: {
+      url: 'https://api.avax-test.network/ext/bc/C/rpc',
+      accounts: [`${PRIVATE_KEY}`],
+    },
     bsc: {
       url: `https://bsc-mainnet.infura.io/v3/${INFURA_API_KEY}`,
       accounts: [`${PRIVATE_KEY}`],
@@ -41,8 +45,19 @@ const config: HardhatUserConfig = {
   etherscan: {
     apiKey: {
       sepolia: `${ETHERSCAN_API_KEY}`,
-      bsc: `${BSCSCAN_API_KEY}`
+      bsc: `${BSCSCAN_API_KEY}`,
+      snowscan: `${ETHERSCAN_API_KEY}`
     },
+    customChains: [
+      {
+        network: "snowscan",
+        chainId: 43113,
+        urls: {
+          apiURL: "https://api.etherscan.io/api?chainid=43113",
+          browserURL: "https://avalanche.testnet.localhost:8080"
+        }
+      }
+    ]
   },
 };
 

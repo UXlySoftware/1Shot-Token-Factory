@@ -10,22 +10,29 @@ import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Ini
 contract Token is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, AccessControlUpgradeable {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
+    uint public maxSupply;
+
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
     }
 
-    function initialize(address defaultAdmin, string calldata name, string calldata ticker, uint premint) public initializer {
+    function initialize(address defaultAdmin, string calldata name, string calldata ticker, uint _maxSupply) public initializer {
         __ERC20_init(name, ticker);
         __ERC20Burnable_init();
         __AccessControl_init();
 
-        _mint(defaultAdmin, premint);
+        maxSupply = _maxSupply;
         _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
         _grantRole(MINTER_ROLE, defaultAdmin);
     }
 
+    /// @dev Called by the MINTER_ROLE to mint tokens to a recipient address
+    /// @dev The amount of tokens minted cannot exceed maxSupply
+    /// @param to the recipient address of the new tokens
+    /// @param amount the amount of tokens to mint in wei
     function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
+        require(totalSupply() + amount <= maxSupply, "Max supply exceeded");
         _mint(to, amount);
     }
 }
