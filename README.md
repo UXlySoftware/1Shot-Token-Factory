@@ -36,9 +36,9 @@ Token Factory: [`0x9aB94A0aE47e709E4f56Ce513a13d16e224240BD`](https://testnet.sn
 
 ## Binance Smart Chain Testnet
 
-Token Implementation: [`0x678586adA236937458D0e8cc9AbfCCfEA6918D8B`](https://bscscan.com/address/0x678586adA236937458D0e8cc9AbfCCfEA6918D8B)
+Token Implementation: [`0x678586adA236937458D0e8cc9AbfCCfEA6918D8B`](https://testnet.bscscan.com/token/0x678586adA236937458D0e8cc9AbfCCfEA6918D8B)
 
-Token Factory: [`0xD9699942281A00188707d3244c9Cb827DE0e4A3c`](https://bscscan.com/address/0xD9699942281A00188707d3244c9Cb827DE0e4A3c)
+Token Factory: [`0xD9699942281A00188707d3244c9Cb827DE0e4A3c`](https://testnet.bscscan.com/address/0xD9699942281A00188707d3244c9Cb827DE0e4A3c)
 
 ## Binance Smart Chain
 
