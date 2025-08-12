@@ -37,6 +37,10 @@ const config: HardhatUserConfig = {
       url: 'https://api.avax-test.network/ext/bc/C/rpc',
       accounts: [`${PRIVATE_KEY}`],
     },
+    bsctestnet: {
+      url: `https://bsc-testnet.infura.io/v3/${INFURA_API_KEY}`,
+      accounts: [`${PRIVATE_KEY}`],
+    },
     bsc: {
       url: `https://bsc-mainnet.infura.io/v3/${INFURA_API_KEY}`,
       accounts: [`${PRIVATE_KEY}`],
@@ -45,6 +49,7 @@ const config: HardhatUserConfig = {
   etherscan: {
     apiKey: {
       sepolia: `${ETHERSCAN_API_KEY}`,
+      bscTestnet: `${BSCSCAN_API_KEY}`,
       bsc: `${BSCSCAN_API_KEY}`,
       snowscan: `${ETHERSCAN_API_KEY}`
     },

@@ -35,4 +35,11 @@ contract Token is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, Acc
         require(totalSupply() + amount <= maxSupply, "Max supply exceeded");
         _mint(to, amount);
     }
+
+    /// @dev Lets a token holder stake tokens to earn rewards
+    /// @dev The amount of tokens staked cannot exceed the balance of the sender
+    /// @param amount the amount of tokens to stake in wei
+    function stake(uint256 amount) external {
+        revert("Staking not implemented");
+    }
 }
